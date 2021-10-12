@@ -36,20 +36,14 @@ spec:
     hostPath:
       path: /var/run/docker.sock
       type: ''
-  - name: maven-cache
-    persistentVolumeClaim:
-      claimName: maven-cache-pvc
   containers:
   - name: jnlp
     image: registry.cn-hangzhou.aliyuncs.com/rookieops/inbound-agent:4.3-4
-  - name: maven
-    image: registry.cn-hangzhou.aliyuncs.com/rookieops/maven:3.5.0-alpine
+  - name: golang
+    image: golang:1.16.5
     command:
     - cat
     tty: true
-    volumeMounts:
-    - name: maven-cache
-      mountPath: /root/.m2
   - name: docker
     image: registry.cn-hangzhou.aliyuncs.com/rookieops/docker:19.03.11
     command:
@@ -99,10 +93,14 @@ spec:
         // 单元测试和编译打包
         stage('Build&Test') {
             steps {
-                container('maven') {
+                container('golang') {
                     script{
-                        tools.PrintMes("编译打包","blue")
-                        build.DockerBuild("${buildShell}")
+                        sh """
+                        go env -w GOPROXY=https://goproxy.cn
+                        CGO_ENABLED=0 go build -o ./wioms ./main.go
+                        [ -d deploy  ] || mkdir deploy
+                        cp -rf templates static configs wioms deploy
+                        """
                     }
                 }
             }
