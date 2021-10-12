@@ -167,7 +167,7 @@ spec:
         stage('Deploy') {
             steps {
                  withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                credentialsId: 'ci-devops',
+                credentialsId: 'github_pull_ssh',
                 usernameVariable: 'DEVOPS_USER',
                 passwordVariable: 'DEVOPS_PASSWORD']]){
                     container('kustomize') {
