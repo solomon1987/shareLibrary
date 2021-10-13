@@ -144,10 +144,6 @@ spec:
         // 构建镜像
         stage('BuildImage') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                credentialsId: 'dockerhub',
-                usernameVariable: 'DOCKER_HUB_USER',
-                passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                     container('docker') {
                         script{
                             tools.PrintMes("构建镜像","green")
@@ -160,7 +156,6 @@ spec:
                             """
                         }
                     }
-                }
             }
         }
         // 部署
