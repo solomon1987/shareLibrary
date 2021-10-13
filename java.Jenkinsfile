@@ -109,24 +109,24 @@ spec:
         // 构建镜像
         stage('BuildImage') {
             steps {
-                    container('docker') {
-                        script{
-                            tools.PrintMes("构建镜像","green")
-                            imageTag = tools.createVersion()
-                            sh """
-                            docker login ${dockerRegistryUrl} -u liyubao1232000 -p QAZxsw123456
-                            docker build -t ${image}:${imageTag} .
-                            docker push ${image}:${imageTag}
-                            docker rmi ${image}:${imageTag}
-                            """
-                        }
+                container('docker') {
+                    script{
+                        tools.PrintMes("构建镜像","green")
+                        imageTag = tools.createVersion()
+                        sh """
+                        docker login ${dockerRegistryUrl} -u liyubao1232000 -p QAZxsw123456
+                        docker build -t ${image}:${imageTag} .
+                        docker push ${image}:${imageTag}
+                        docker rmi ${image}:${imageTag}
+                        """
                     }
+                }
             }
         }
         // 部署
         stage('Deploy') {
             steps {
-                 withCredentials([[$class: 'UsernamePasswordMultiBinding',
+                withCredentials([[$class: 'UsernamePasswordMultiBinding',
                 credentialsId: 'github_pull_ssh',
                 usernameVariable: 'DEVOPS_USER',
                 passwordVariable: 'DEVOPS_PASSWORD']]){
