@@ -1,7 +1,8 @@
 def labels = "slave-${UUID.randomUUID().toString()}"
 
 // 引用共享库
-@Library("jenkins_shareLibrary")
+@Library("jenkins_shareLibrary")_
+import org.devops.tools
 
 // 应用共享库中的方法
 def tools = new org.devops.tools()
