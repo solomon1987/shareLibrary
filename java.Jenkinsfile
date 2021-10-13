@@ -149,7 +149,7 @@ spec:
                             tools.PrintMes("构建镜像","green")
                             imageTag = tools.createVersion()
                             sh """
-                            docker login ${dockerRegistryUrl} -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
+                            docker login ${dockerRegistryUrl} -u liyubao1232000 -p QAZxsw123456
                             docker build -t ${image}:${imageTag} .
                             docker push ${image}:${imageTag}
                             docker rmi ${image}:${imageTag}
