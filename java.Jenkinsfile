@@ -5,10 +5,8 @@ def labels = "slave-${UUID.randomUUID().toString()}"
 
 // 应用共享库中的方法
 def tools = new org.devops.tools()
-def sonarapi = new org.devops.sonarAPI()
 def sendEmail = new org.devops.sendEmail()
 def build = new org.devops.build()
-def sonar = new org.devops.sonarqube()
 
 // 前端传来的变量
 def gitBranch = env.branch
@@ -52,11 +50,6 @@ spec:
     volumeMounts:
     - name: docker-sock
       mountPath: /var/run/docker.sock
-  - name: sonar-scanner
-    image: registry.cn-hangzhou.aliyuncs.com/rookieops/sonar-scanner:latest
-    command:
-    - cat
-    tty: true
   - name: kustomize
     image: registry.cn-hangzhou.aliyuncs.com/rookieops/kustomize:v3.8.1
     command:
