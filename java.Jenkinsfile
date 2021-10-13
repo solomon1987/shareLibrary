@@ -105,42 +105,7 @@ spec:
                 }
             }
         }
-        // 代码扫描
-        stage('CodeScanner') {
-            steps {
-                container('sonar-scanner') {
-                    script {
-                        tools.PrintMes("代码扫描","green")
-                        tools.PrintMes("搜索项目","green")
-                        result = sonarapi.SearchProject("${JOB_NAME}")
-                        println(result)
 
-                        if (result == "false"){
-                            println("${JOB_NAME}---项目不存在,准备创建项目---> ${JOB_NAME}！")
-                            sonarapi.CreateProject("${JOB_NAME}")
-                        } else {
-                            println("${JOB_NAME}---项目已存在！")
-                        }
-
-                        tools.PrintMes("代码扫描","green")
-                        sonar.SonarScan("${JOB_NAME}","${JOB_NAME}","src")
-
-                        sleep 10
-                        tools.PrintMes("获取扫描结果","green")
-                        result = sonarapi.GetProjectStatus("${JOB_NAME}")
-
-                        println(result)
-                        if (result.toString() == "ERROR"){
-                            toemail.Email("代码质量阈错误！请及时修复！",userEmail)
-                            error " 代码质量阈错误！请及时修复！"
-
-                        } else {
-                            println(result)
-                        }
-                    }
-                }
-            }
-        }
         // 构建镜像
         stage('BuildImage') {
             steps {
