@@ -13,7 +13,6 @@ def gitBranch = env.branch
 def gitUrl = env.git_url
 def buildShell = env.build_shell
 def image = env.image
-def dockerRegistryUrl = env.dockerRegistryUrl
 def devops_cd_git = env.devops_cd_git
 
 
@@ -107,7 +106,7 @@ spec:
                         tools.PrintMes("构建镜像","green")
                         imageTag = tools.createVersion()
                         sh """
-                        docker login ${dockerRegistryUrl} -u liyubao1232000 -p QAZxsw123456
+                        docker login -u liyubao1232000 -p QAZxsw123456
                         docker build -t ${image}:${imageTag} .
                         docker push ${image}:${imageTag}
                         docker rmi ${image}:${imageTag}
