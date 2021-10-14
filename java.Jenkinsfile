@@ -103,8 +103,7 @@ spec:
             steps {
                 container('docker') {
                     script{
-                        tools.PrintMes("构建镜像","green")
-                        imageTag = tools.createVersion()
+                        imageTag = v$BUILD_NUMBER
                         sh """
                         docker login -u liyubao1232000 -p QAZxsw123456
                         docker build -t ${image}:${imageTag} .
