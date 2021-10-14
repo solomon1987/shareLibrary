@@ -42,7 +42,7 @@ spec:
     - cat
     tty: true
   - name: docker
-    image: registry.cn-hangzhou.aliyuncs.com/rookieops/docker:19.03.11
+    image: docker:latest
     command:
     - cat
     tty: true
