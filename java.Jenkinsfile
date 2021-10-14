@@ -32,7 +32,6 @@ spec:
   - name: docker-sock
     hostPath:
       path: /var/run/docker.sock
-      type: ''
   containers:
   - name: jnlp
     image: registry.cn-hangzhou.aliyuncs.com/rookieops/inbound-agent:4.3-4
