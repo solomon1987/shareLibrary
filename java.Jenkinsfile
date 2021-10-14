@@ -103,12 +103,12 @@ spec:
             steps {
                 container('docker') {
                     script{
-                        imageTag = v$BUILD_NUMBER
                         sh """
+                        IMAGE_NAME="liyubao1232000/wioms:v$BUILD_NUMBER"
                         docker login -u liyubao1232000 -p QAZxsw123456
-                        docker build -t ${image}:${imageTag} .
-                        docker push ${image}:${imageTag}
-                        docker rmi ${image}:${imageTag}
+                        docker build -t $IMAGE_NAME .
+                        docker push $IMAGE_NAME
+                        docker rmi $IMAGE_NAME
                         """
                     }
                 }
